@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>PhotoSurface Demo</title>
+		
+		<link media="all" type="text/css" rel="stylesheet" href="../Source/Assets/PhotoSurface.css" />
+		<link media="all" type="text/css" rel="stylesheet" href="./Assets/Demo.css" />
+		
+		<script type="text/javascript" src="../Vendor/Mootools.js"></script>
+		<script type="text/javascript" src="../Source/PhotoSurface.js"></script>
+		
+		<script type="text/javascript">
+			
+			var goBasic = function(surface) {
+
+				// clear existing photos
+				surface.empty();
+				
+				// now add a photo to the surface
+				surface.add("./Assets/SunsetHigh.jpg");
+
+				// or many
+				for (var i=0, l=20; i<l; i++)
+				{
+					surface.add("./Assets/SunsetHigh.jpg");
+				}
+			};
+
+			var goAdvanced = function(surface) {
+
+				// clear existing photos
+				surface.empty();
+				
+				//  lets get some super low res photos in there...
+				for (var i=0, l=20; i<l; i++)
+				{
+					new Photo("./Assets/SkylineSuperLow.jpg", { 
+				       	onLoaded: function(photo) {
+				       		photo.removeEvents('loaded'); 
+				       		surface.add(photo); 
+				       	},
+				       	loadingIcon: "../Source/Assets/Hourglass.png"
+			       	});
+				}
+
+		       	// now hook into the surface activation and deactivation events to manage the resolution swap
+				surface.addEvent('activated', function(photo) {
+
+		            // ensure surface will redraw when high res photo loaded
+		            photo.addEvent('set', function(photo) {
+		                photo.removeEvents();
+		                surface.update({"layers":"active"});
+		            });
+
+		            // and change the photo
+		            photo.set(photo.path.replace("SuperLow", "High"));
+		        });
+
+		        surface.addEvent('deactivated', function(photo) {
+		            photo.removeEvents();
+		            photo.set(photo.path.replace("High", "SuperLow"));
+		        }.bind(this));
+			};
+		
+			window.addEvent('domready', function() {
+				
+				// create the surface and attach it to a containing element on the page
+				var surface = new PhotoSurface().attach($('surface'));
+
+				// and our switches for modes
+				var options = $('options').getElements('li');
+				options[0].addEvent('click', function(evt) {
+					evt.stop();
+					goBasic(surface);
+					options[1].removeClass('selected');
+					options[0].addClass('selected');
+				});
+				
+				options[1].addEvent('click', function(evt) {
+					evt.stop();
+					goAdvanced(surface);
+					options[0].removeClass('selected');
+					options[1].addClass('selected');
+				});
+
+				// default option
+				goBasic(surface);
+				options[0].addClass('selected');
+				
+			});
+		</script>
+	</head>
+	
+	<body>
+		<div id='demo'>
+				
+			<div id='header'>
+				<h1>PhotoSurface Demo</h1>
+			</div>
+			
+			<div id='options'>			
+				<ul>
+					<li>Basic</li>
+					<li>Advanced</li>
+				</ul>
+			</div>	
+			
+			<div id='surface'>
+			</div>
+						
+		</div>
+	</body>
+</html>

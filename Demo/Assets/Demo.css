@@ -1,0 +1,81 @@
+/*
+---
+
+description: Stylesheet for demo 
+
+license: MIT-style
+
+authors:
+- Martin Pengelly-Phillips
+
+...
+*/
+
+html,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,p,blockquote,th,td,img {
+	margin:0;
+	padding:0;
+}
+
+img,body,html {
+	border:0;
+}
+
+html, body {
+    font-family: Verdana, Lucida, Arial, Helvetica, sans-serif;
+	font-weight: normal;
+	height: 100%;
+}
+#demo {
+	position: absolute;
+	left: 30px;
+	top: 30px;
+	bottom: 30px;
+	right: 30px;
+}
+
+#header {
+	margin-bottom: 20px;
+}
+
+#header h1 {
+	color: #aaa;
+	display: inline;
+}
+
+#options {
+	width: 130px;
+}
+
+#options a {
+	text-decoration: none;
+}
+
+#options li {
+	background-color: rgb(240,240,240);
+	margin: 3px;
+	list-style-type: none;
+	padding: 3px;
+	cursor: pointer;
+	color: #444;
+}
+
+#options li.selected {
+	background-color: rgb(220,220,250);	
+}
+
+#options li:hover {
+	background-color: rgb(230,230,250);
+	
+}
+
+#surface {
+	position: absolute;
+	top: 60px;
+	left: 150px;
+	right: 10px;
+	bottom: 10px;
+	border: 1px solid rgb(200,200,200);
+	-moz-box-shadow: 0px 0px 15px rgba(0,0,0,0.5);
+	min-height: 300px;
+}
+
