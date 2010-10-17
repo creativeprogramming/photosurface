@@ -63,7 +63,7 @@ var PhotoSurface = new Class({
     Implements: [Options, Events],
 
     options: {
-        'class': 'photo-surface',   // class applied to constructed container element
+        'className': 'photo-surface',   // class applied to constructed container element
         'manageResize': true,       // whether surface should auto manage window resize events
         'click': {
             duration: 500, // maximum time between mouse down and up to determine mode
@@ -84,7 +84,7 @@ var PhotoSurface = new Class({
 
         // elements
         this.elements = {};
-        this.elements.container = new Element('div', {'class':this.options.class});
+        this.elements.container = new Element('div', {'class':this.options.className});
         this.elements.inactive = new Element('canvas').inject(this.elements.container);
         this.elements.active = new Element('canvas').inject(this.elements.container);
           
